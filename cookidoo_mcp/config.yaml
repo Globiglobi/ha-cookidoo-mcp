@@ -1,0 +1,39 @@
+name: Cookidoo MCP
+version: "0.1.0"
+slug: cookidoo_mcp
+description: Thermomix-TM7-Rezepte aus Claude direkt in Cookidoo anlegen (MCP-Server mit GitHub-Login)
+url: https://github.com/Globiglobi/ha-cookidoo-mcp
+arch:
+  - aarch64
+  - amd64
+startup: application
+boot: auto
+ports:
+  8001/tcp: 8001
+ports_description:
+  8001/tcp: MCP-Server (wird über den Cloudflare-Tunnel veröffentlicht)
+options:
+  cookidoo_email: ""
+  cookidoo_password: ""
+  public_url: "https://cookidoo.immer.uk"
+  github_client_id: ""
+  github_client_secret: ""
+  allowed_github_users:
+    - Globiglobi
+  allowed_client_redirect_uris:
+    - https://claude.ai/api/mcp/auth_callback
+    - https://claude.com/api/mcp/auth_callback
+  quality_bar: 70
+  log_level: info
+schema:
+  cookidoo_email: email
+  cookidoo_password: password
+  public_url: url
+  github_client_id: str
+  github_client_secret: password
+  allowed_github_users:
+    - str
+  allowed_client_redirect_uris:
+    - str?
+  quality_bar: int(0,100)
+  log_level: list(debug|info|warning|error)
