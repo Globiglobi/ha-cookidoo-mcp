@@ -274,6 +274,13 @@ def load_cookidoo_credentials() -> tuple[str, str]:
     return email, password
 
 
+async def refresh_cookidoo_token(api) -> None:
+    """Token erneuern; kompatibel mit cookidoo-api <0.17.1 (refresh_token)
+    und >=0.18 (refresh). [ha-addon patch]"""
+    fn = getattr(api, "refresh", None) or getattr(api, "refresh_token")
+    await fn()
+
+
 class CookidooService:
     """Service class for managing Cookidoo API interactions."""
     
@@ -367,7 +374,7 @@ class CookidooService:
 
         status, text = await _send()
         if status == 401:
-            await self._api_client.refresh_token()
+            await refresh_cookidoo_token(self._api_client)
             status, text = await _send()
         return status, text
 
@@ -475,7 +482,7 @@ class CookidooService:
         try:
             await self._api_client.remove_custom_recipe(recipe_id)
         except CookidooAuthException:
-            await self._api_client.refresh_token()
+            await refresh_cookidoo_token(self._api_client)
             await self._api_client.remove_custom_recipe(recipe_id)
 
     async def list_custom_recipes(self) -> list[dict]:

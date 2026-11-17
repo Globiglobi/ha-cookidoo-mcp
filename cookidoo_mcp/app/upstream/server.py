@@ -20,6 +20,7 @@ from starlette.routing import Route
 from cookidoo_service import (
     CookidooService,
     build_step_annotations,
+    refresh_cookidoo_token,
     load_cookidoo_credentials,
 )
 from schemas import CustomRecipe
@@ -64,7 +65,7 @@ async def _ensure_connected() -> tuple[Optional[str], Optional[CookidooService]]
         if _token_seconds_left(_cookidoo_api) > TOKEN_REFRESH_BUFFER_SECONDS:
             return None, _cookidoo_service
         try:
-            await _cookidoo_api.refresh_token()
+            await refresh_cookidoo_token(_cookidoo_api)
             return None, _cookidoo_service
         except Exception:
             try:
