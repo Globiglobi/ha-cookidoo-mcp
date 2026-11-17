@@ -75,7 +75,7 @@ und das **Client secret** kopieren (das Secret wird nur einmal angezeigt).
 ### 4. Cloudflare-Tunnel einrichten
 
 1. **Einstellungen → Apps → App Store → ⋮ → Repositories** →
-   `https://github.com/brenner-tobias/addon-cloudflared` hinzufügen
+   `https://github.com/homeassistant-apps/repository` hinzufügen
 2. **Cloudflared** installieren, Tab **Konfiguration**, auf **In YAML bearbeiten** umschalten und einfügen
    (IP durch die deines Pi ersetzen):
 
