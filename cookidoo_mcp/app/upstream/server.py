@@ -9,6 +9,7 @@ over stdio for local Claude Desktop use.
 import json
 import os
 import re
+import time
 from typing import Optional
 
 from fastmcp import FastMCP
@@ -35,6 +36,18 @@ _cookidoo_service: Optional[CookidooService] = None
 _cookidoo_api = None
 
 
+def _token_seconds_left(api) -> float:
+    """Restlaufzeit des Cookidoo-Tokens; kompatibel mit alten (expires_in)
+    und neuen (auth_data.expires_at) cookidoo-api-Versionen. [ha-addon patch]"""
+    legacy = getattr(api, "expires_in", None)
+    if legacy is not None:
+        return float(legacy)
+    auth = getattr(api, "auth_data", None)
+    if auth is not None and getattr(auth, "expires_at", None):
+        return float(auth.expires_at) - time.time()
+    return 0.0
+
+
 async def _ensure_connected() -> tuple[Optional[str], Optional[CookidooService]]:
     """Lazy-login with proactive token refresh.
 
@@ -48,7 +61,7 @@ async def _ensure_connected() -> tuple[Optional[str], Optional[CookidooService]]
     """
     global _cookidoo_service, _cookidoo_api
     if _cookidoo_service and _cookidoo_api:
-        if _cookidoo_api.expires_in > TOKEN_REFRESH_BUFFER_SECONDS:
+        if _token_seconds_left(_cookidoo_api) > TOKEN_REFRESH_BUFFER_SECONDS:
             return None, _cookidoo_service
         try:
             await _cookidoo_api.refresh_token()

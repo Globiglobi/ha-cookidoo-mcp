@@ -1,5 +1,5 @@
 name: Cookidoo MCP
-version: "0.1.0"
+version: "0.1.1"
 slug: cookidoo_mcp
 description: Thermomix-TM7-Rezepte aus Claude direkt in Cookidoo anlegen (MCP-Server mit GitHub-Login)
 url: https://github.com/Globiglobi/ha-cookidoo-mcp
