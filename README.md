@@ -110,6 +110,15 @@ und lade es nach meiner Freigabe in Cookidoo hoch.»*
 Danach am TM7 unter **Meine Rezepte** öffnen und prüfen, ob die Schritte mit
 Play-Button erscheinen.
 
+### Optional: ChatGPT anbinden
+
+1. In HA bei **Cookidoo MCP → Konfiguration** unter `allowed_client_redirect_uris`
+   `https://chatgpt.com/connector_platform_oauth_redirect` ergänzen → Speichern → Add-on neu starten
+2. chatgpt.com → **Einstellungen → Apps & Connectors → Erweitert → Entwicklermodus** einschalten
+3. **Connector erstellen**: URL `https://cookidoo.immer.uk/mcp`, Authentifizierung **OAuth**
+   (Client-ID/Secret leer lassen) → GitHub-Login
+4. Im Chat den Connector über das **+**-Menü aktivieren
+
 ---
 
 ## Was am TM7 geführt funktioniert

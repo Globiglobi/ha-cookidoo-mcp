@@ -23,6 +23,7 @@ options:
   allowed_client_redirect_uris:
     - https://claude.ai/api/mcp/auth_callback
     - https://claude.com/api/mcp/auth_callback
+    - https://chatgpt.com/connector_platform_oauth_redirect
   quality_bar: 70
   log_level: info
 schema:
